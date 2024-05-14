@@ -154,6 +154,25 @@ def create_streamlit_interface():
     st.title('🤖 WikiShia Fact Checker Chatbot')
     st.write("This chatbot's here to help you dive into all things Shia Islam! Discover accurate info on various topics in a fun, easy way. It's like having a helpful friend guiding your learning journey. Let's explore and learn together!")
 
+
+    # Topic Selection
+    question_col1, question_col2, question_col3 = st.columns([1,1,1])
+    current_question = ''
+    with question_col1:
+      if st.button("Topic 1"):
+        question_choices = topic_choices["Topic 1"]
+
+    with question_col2:
+      if st.button("Topic 2"):
+        question_choices = topic_choices["Topic 2"]
+
+    with question_col3:
+      if st.button("Topic 3"):
+        question_choices = topic_choices["Topic 3"]
+
+    current_question = np.random.choice(question_choices)
+    st.write(current_question)
+  
     # CSS for styling message history, fixed chat input, and labels
     st.markdown("""
         <style>
