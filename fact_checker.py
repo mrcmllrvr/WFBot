@@ -33,20 +33,20 @@ openai_ef = embedding_functions.OpenAIEmbeddingFunction(api_key=OPENAI_KEY,
 
 # Initialize the Questions
 topic_choices = {
-  "Topic 1" : [
-    "Question 1",
-    "Question 2",
-    "Question 3"
+  "Prophethood" : [
+    "What was the goal of the Prophets?",
+    "What was the goal of the Prophets?",
+    "What was the goal of the Prophets?",
   ],
-  "Topic 2" : [
-    "Question 1",
-    "Question 2",
-    "Question 3"
+  "Tawhid" : [
+    "What is the literal meaning of the word \"Tawhid\"?",
+    "What is the literal meaning of the word \"Tawhid\"?",
+    "What is the literal meaning of the word \"Tawhid\"?",
   ],
-  "Topic 3" : [
-    "Question 1",
-    "Question 2",
-    "Question 3"
+  "Qiyama" : [
+    "What are some of the signs of Qiyama mentioned in the Quran?",
+    "What are some of the signs of Qiyama mentioned in the Quran?",
+    "What are some of the signs of Qiyama mentioned in the Quran?",
   ]
 }
 
