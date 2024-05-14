@@ -161,6 +161,7 @@ def create_streamlit_interface():
     # Topic Selection
     question_col1, question_col2, question_col3 = st.columns([1,1,1])
     current_question = ''
+    question_choices = None
     with question_col1:
       if st.button("Topic 1"):
         question_choices = topic_choices["Topic 1"]
@@ -173,110 +174,114 @@ def create_streamlit_interface():
       if st.button("Topic 3"):
         question_choices = topic_choices["Topic 3"]
 
-    current_question = np.random.choice(question_choices)
-    st.write(current_question)
+    if question_choices:
+      current_question = np.random.choice(question_choices)
+      st.write(current_question)
+    
+      # CSS for styling message history, fixed chat input, and labels
+      st.markdown("""
+          <style>
+              .message-container, .message-chatbot {
+                  padding: 10px;
+                  margin-top: 5px;
+                  border-radius: 5px;
+              }
+              .message-container {
+                  background-color: #f0f0f0; /* Light grey background for User */
+                  border-left: 5px solid #4CAF50; /* Green border for User */
+              }
+              .message-chatbot {
+                  background-color: #ffffff; /* White background for Chatbot */
+                  border-left: 5px solid #2196F3; /* Blue border for Chatbot */
+              }
+              .fixed-footer {
+                  position: fixed;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  background-color: #fff;
+                  padding: 10px 20px;
+                  box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
+                  z-index: 100;
+              }
+              .streamlit-container {
+                  padding-bottom: 70px; /* Ensure padding for fixed footer input */
+              }
+              .label {
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 5px;
+              }
+              .message-text {
+                  margin-left: 20px; /* Indent message text for better readability */
+              }
+              .thread-container {
+                  margin-top: 20px;
+                  margin-bottom: 20px;
+              }
+              .stButton > button {
+                  width: 100%;
+                  border-radius: 5px;
+                  background-color: #4CAF50;
+                  color: white;
+              }
+          </style>
+          """, unsafe_allow_html=True)
   
-    # CSS for styling message history, fixed chat input, and labels
-    st.markdown("""
-        <style>
-            .message-container, .message-chatbot {
-                padding: 10px;
-                margin-top: 5px;
-                border-radius: 5px;
-            }
-            .message-container {
-                background-color: #f0f0f0; /* Light grey background for User */
-                border-left: 5px solid #4CAF50; /* Green border for User */
-            }
-            .message-chatbot {
-                background-color: #ffffff; /* White background for Chatbot */
-                border-left: 5px solid #2196F3; /* Blue border for Chatbot */
-            }
-            .fixed-footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background-color: #fff;
-                padding: 10px 20px;
-                box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
-                z-index: 100;
-            }
-            .streamlit-container {
-                padding-bottom: 70px; /* Ensure padding for fixed footer input */
-            }
-            .label {
-                font-weight: bold;
-                display: block;
-                margin-bottom: 5px;
-            }
-            .message-text {
-                margin-left: 20px; /* Indent message text for better readability */
-            }
-            .thread-container {
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-            .stButton > button {
-                width: 100%;
-                border-radius: 5px;
-                background-color: #4CAF50;
-                color: white;
-            }
-        </style>
-        """, unsafe_allow_html=True)
+      if 'message_history' not in st.session_state:
+          st.session_state['message_history'] = []
+  
+      def ask_question():
+          user_query = st.session_state.query
+          if user_query:
+              # Append the user query immediately to the chat history
+              st.session_state['message_history'].append({'sender': '👤User', 'text': user_query})
+              
+              # Show spinner while processing the response
+              with st.spinner('Crafting response...'):
+                  response = check_fact(user_query)  # Adjusted to not use index or embeddings
+                  st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
+  
+      def start_new_chat():
+          st.session_state['message_history'] = []
+  
+      # # Display messages using HTML and CSS in a scrollable container
+      for message in st.session_state['message_history']:
+          if message['sender'] == '👤User':
+              class_name = "message-container"
+              label = "👤User"
+          else:
+              class_name = "message-chatbot"
+              label = "🤖Chatbot"
+  
+          # Assume that paragraphs are split by '\n' in the message["text"]
+          # This converts each line into a paragraph within <p> tags
+          paragraphs = message["text"].split('\n')  # Splits the text into paragraphs at newlines
+          paragraph_html = ''.join(f'<p>{paragraph}</p>' for paragraph in paragraphs if paragraph.strip())  # Wraps non-empty paragraphs in <p> tags
+  
+          st.markdown(f'''
+          <div class="thread-container">
+              <div class="{class_name}">
+                  <div class="label">{label}:</div>
+                  <div class="message-text">{paragraph_html}</div>
+              </div>
+          </div>
+          ''', unsafe_allow_html=True)
+  
+  
+      # Fixed footer for chat input
+      st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
+      st.chat_input("Type your query here:", key="query", on_submit=ask_question)
+      st.markdown('</div>', unsafe_allow_html=True)
+  
+      # Button to start a new chat at the bottom of the conversation
+      if st.button("Start New Chat", key='start_new_chat'):
+          start_new_chat()
 
-    if 'message_history' not in st.session_state:
-        st.session_state['message_history'] = []
-
-    def ask_question():
-        user_query = st.session_state.query
-        if user_query:
-            # Append the user query immediately to the chat history
-            st.session_state['message_history'].append({'sender': '👤User', 'text': user_query})
-            
-            # Show spinner while processing the response
-            with st.spinner('Crafting response...'):
-                response = check_fact(user_query)  # Adjusted to not use index or embeddings
-                st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
-
-    def start_new_chat():
-        st.session_state['message_history'] = []
-
-    # # Display messages using HTML and CSS in a scrollable container
-    for message in st.session_state['message_history']:
-        if message['sender'] == '👤User':
-            class_name = "message-container"
-            label = "👤User"
-        else:
-            class_name = "message-chatbot"
-            label = "🤖Chatbot"
-
-        # Assume that paragraphs are split by '\n' in the message["text"]
-        # This converts each line into a paragraph within <p> tags
-        paragraphs = message["text"].split('\n')  # Splits the text into paragraphs at newlines
-        paragraph_html = ''.join(f'<p>{paragraph}</p>' for paragraph in paragraphs if paragraph.strip())  # Wraps non-empty paragraphs in <p> tags
-
-        st.markdown(f'''
-        <div class="thread-container">
-            <div class="{class_name}">
-                <div class="label">{label}:</div>
-                <div class="message-text">{paragraph_html}</div>
-            </div>
-        </div>
-        ''', unsafe_allow_html=True)
-
-
-    # Fixed footer for chat input
-    st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
-    st.chat_input("Type your query here:", key="query", on_submit=ask_question)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # Button to start a new chat at the bottom of the conversation
-    if st.button("Start New Chat", key='start_new_chat'):
-        start_new_chat()
-
-
+    else:
+      st.warning("Select a question")
+  
+  
 # Adjust the main part to work with session state
 if __name__ == '__main__':
     create_streamlit_interface()
