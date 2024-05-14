@@ -1,3 +1,7 @@
+__import__('pysqlite3')
+import sys
+import sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import json
 import re
 import numpy as np
