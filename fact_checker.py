@@ -4,7 +4,6 @@ import numpy as np
 import hashlib
 import streamlit as st
 from collections import Counter
-from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
