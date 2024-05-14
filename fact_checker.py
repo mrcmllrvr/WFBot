@@ -20,7 +20,6 @@ import openai
 import logging
 import time
 from threading import Lock
-from embedding import create_index
 
 # Constants
 CHROMA_DATA_PATH = 'chromadb_fact_checker/'
