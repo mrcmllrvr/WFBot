@@ -160,24 +160,24 @@ def create_streamlit_interface():
 
 
     # Topic Selection
-    question_col1, question_col2, question_col3 = st.columns([1,1,1])
-    current_question = ''
-    question_choices = None
-    with question_col1:
-      if st.button("Prophethood"):
-        question_choices = topic_choices["Prophethood"]
+    # question_col1, question_col2, question_col3 = st.columns([1,1,1])
+    # current_question = ''
+    # question_choices = None
+    # with question_col1:
+    #   if st.button("Prophethood"):
+    #     question_choices = topic_choices["Prophethood"]
 
-    with question_col2:
-      if st.button("Tawhid"):
-        question_choices = topic_choices["Tawhid"]
+    # with question_col2:
+    #   if st.button("Tawhid"):
+    #     question_choices = topic_choices["Tawhid"]
 
-    with question_col3:
-      if st.button("Qiyama"):
-        question_choices = topic_choices["Qiyama"]
+    # with question_col3:
+    #   if st.button("Qiyama"):
+    #     question_choices = topic_choices["Qiyama"]
 
-    if question_choices:
-      current_question = np.random.choice(question_choices)
-      st.write(current_question)
+    if True:
+    #   current_question = np.random.choice(question_choices)
+    #   st.write(current_question)
     
       # CSS for styling message history, fixed chat input, and labels
       st.markdown("""
