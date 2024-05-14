@@ -28,6 +28,25 @@ client = chromadb.PersistentClient(path=CHROMA_DATA_PATH)
 openai_ef = embedding_functions.OpenAIEmbeddingFunction(api_key=OPENAI_KEY,
                                                          model_name="text-embedding-3-small")
 
+# Initialize the Questions
+topic_choices = {
+  "Topic 1" : [
+    "Question 1",
+    "Question 2",
+    "Question 3"
+  ],
+  "Topic 2" : [
+    "Question 1",
+    "Question 2",
+    "Question 3"
+  ],
+  "Topic 3" : [
+    "Question 1",
+    "Question 2",
+    "Question 3"
+  ]
+}
+
 OpenAIClient = openai.OpenAI(api_key = OPENAI_KEY)
 collection = client.get_or_create_collection(
     name = COLLECTION_NAME,
