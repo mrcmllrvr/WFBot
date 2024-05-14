@@ -163,16 +163,16 @@ def create_streamlit_interface():
     current_question = ''
     question_choices = None
     with question_col1:
-      if st.button("Topic 1"):
-        question_choices = topic_choices["Topic 1"]
+      if st.button("Prophethood"):
+        question_choices = topic_choices["Prophethood"]
 
     with question_col2:
-      if st.button("Topic 2"):
-        question_choices = topic_choices["Topic 2"]
+      if st.button("Tawhid"):
+        question_choices = topic_choices["Tawhid"]
 
     with question_col3:
-      if st.button("Topic 3"):
-        question_choices = topic_choices["Topic 3"]
+      if st.button("Qiyama"):
+        question_choices = topic_choices["Qiyama"]
 
     if question_choices:
       current_question = np.random.choice(question_choices)
