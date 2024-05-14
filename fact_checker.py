@@ -22,7 +22,7 @@ from embedding import create_index
 # Constants
 CHROMA_DATA_PATH = 'chromadb_fact_checker/'
 COLLECTION_NAME = "document_embeddings"
-OPENAI_KEY = st.secrets["openai"]["OPENAI_API_KEY"]
+OPENAI_KEY = st.secrets["OPENAI_API_KEY"]
 
 # API Clients
 client = chromadb.PersistentClient(path=CHROMA_DATA_PATH)
