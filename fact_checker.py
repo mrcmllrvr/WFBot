@@ -136,8 +136,8 @@ def create_streamlit_interface():
         st.empty()
 
 
-    st.title('🤖 WikiShia Fact Checker Chatbot')
-    st.write("This chatbot's here to help you dive into all things Shia Islam! Discover accurate info on various topics in a fun, easy way. It's like having a helpful friend guiding your learning journey. Let's explore and learn together!")
+    st.title('🤖')
+    st.write("How can I help you today?")
 
     # CSS for styling message history, fixed chat input, and labels
     st.markdown("""
