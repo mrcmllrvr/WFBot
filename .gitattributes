@@ -1,0 +1,2 @@
+chromadb_fact_checker/*.sqlite3 filter=lfs diff=lfs merge=lfs -text
+chromadb_fact_checker/61b33f8c-036e-4c8e-af74-4f8749cc152f/*.bin filter=lfs diff=lfs merge=lfs -text
