@@ -173,7 +173,7 @@ def create_streamlit_interface():
         st.empty()
 
     with col2:
-        st.image("wf-chatbot-logo-with-name.png", width=50)
+        st.image("wf-chatbot-logo-with-name.png", width=300)
 
     with col3:
         st.empty()
