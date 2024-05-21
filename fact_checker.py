@@ -269,7 +269,7 @@ def render_chat_interface():
                 margin-bottom: 20px;
             }
             .stButton > button {
-                width: 100%;
+                width: 18%;
                 border-radius: 10px;
                 background-color: #002855;
                 color: white;
