@@ -167,7 +167,7 @@ def create_streamlit_interface():
         st.sidebar.image("ICAIR-logo.png", use_column_width=True)
 
     # Using columns to center an image
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns([1, 2, 1])
 
     with col1:
       st.write("")
