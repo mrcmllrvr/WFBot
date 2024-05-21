@@ -243,6 +243,37 @@ def render_chat_interface():
                 background-color: #ffffff;
                 border-left: 5px solid #002855;
             }
+            .fixed-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #fff;
+                padding: 10px 200px;
+                box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+            .streamlit-container {
+                padding-bottom: 70px;
+            }
+            .label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+            }
+            .message-text {
+                margin-left: 20px;
+            }
+            .thread-container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .stButton > button {
+                width: 100%;
+                border-radius: 10px;
+                background-color: #002855;
+                color: white;
+            }
             .spinner-container {
                 text-align: center;
                 margin-top: 10px;
