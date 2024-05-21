@@ -196,7 +196,7 @@ def create_streamlit_interface():
 
   # Topic Selection
   if st.session_state['current_question'] is None:
-      question_col1, question_col2, question_col3 = st.columns(3)
+    question_col1, question_col2, question_col3 = st.columns(3)
       
     # def disable_buttons_and_topic_select(topic):
     #     st.session_state.disabled = True
