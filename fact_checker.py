@@ -180,7 +180,6 @@ def create_streamlit_interface():
 
     st.write("Salaam alaikum! Please select a topic for your quiz today.")
 
-    
     # Initialize Session States
     if 'current_question' not in st.session_state:
         st.session_state['current_question'] = None
@@ -192,38 +191,36 @@ def create_streamlit_interface():
         st.session_state['message_history'] = []
 
     st.session_state.disabled = st.session_state['current_question'] is not None
-  
 
     # Topic Selection
     if st.session_state['current_question'] is None:
         question_col1, question_col2, question_col3 = st.columns(3)
-      
-    # def disable_buttons_and_topic_select(topic):
-    #     st.session_state.disabled = True
-    #     st.session_state['question_choices'] = topic_choices[topic]
-    #     st.session_state['current_question'] = np.random.choice(st.session_state['question_choices'])
-    #     st.session_state['message_history'].append({'sender': "🤖Chatbot", 'text': st.session_state['current_question']})
-    # question_col1, question_col2, question_col3 = st.columns(3)
 
-    button1 = question_col1.button("Prophethood",
-                                   key="q1_clicked",
-                                   on_click = disable_buttons_and_topic_select,
-                                   args = ['Prophethood'],
-                                   disabled=st.session_state.disabled)
-    button2 = question_col2.button("Tawhid",
-                                   key="q2_clicked",
-                                   on_click = disable_buttons_and_topic_select,
-                                   args = ['Tawhid'],
-                                   disabled=st.session_state.disabled)
-    button3 = question_col3.button("Qiyama",
-                                   key="q3_clicked",
-                                   on_click = disable_buttons_and_topic_select,
-                                   args = ['Qiyama'],
-                                   disabled=st.session_state.disabled)
+        # Define the function here
+        def disable_buttons_and_topic_select(topic):
+            st.session_state.disabled = True
+            st.session_state['question_choices'] = topic_choices[topic]
+            st.session_state['current_question'] = np.random.choice(st.session_state['question_choices'])
+            st.session_state['message_history'].append({'sender': "🤖Chatbot", 'text': st.session_state['current_question']})
 
+        button1 = question_col1.button("Prophethood",
+                                       key="q1_clicked",
+                                       on_click=disable_buttons_and_topic_select,
+                                       args=['Prophethood'],
+                                       disabled=st.session_state.disabled)
+        button2 = question_col2.button("Tawhid",
+                                       key="q2_clicked",
+                                       on_click=disable_buttons_and_topic_select,
+                                       args=['Tawhid'],
+                                       disabled=st.session_state.disabled)
+        button3 = question_col3.button("Qiyama",
+                                       key="q3_clicked",
+                                       on_click=disable_buttons_and_topic_select,
+                                       args=['Qiyama'],
+                                       disabled=st.session_state.disabled)
 
-  if st.session_state['current_question']:
-      render_chat_interface()
+    if st.session_state['current_question']:
+        render_chat_interface()
 
     # if not st.session_state['question_choices']:
     #     st.warning("Select a question")
