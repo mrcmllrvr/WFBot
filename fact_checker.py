@@ -167,7 +167,7 @@ def create_streamlit_interface():
         st.sidebar.image("ICAIR-logo.png", use_column_width=True)
 
     # Using columns to center an image
-    col1, col2, col3 = st.columns([3, 1, 3])
+    col1, col2, col3 = st.columns([1, 1, 1])
 
     with col1:
         st.empty()
@@ -192,6 +192,12 @@ def create_streamlit_interface():
         st.session_state['message_history'] = []
 
     st.session_state.disabled = st.session_state['current_question'] is not None
+
+  
+    if not st.session_state['question_choices']:
+        st.warning("Select a question")
+    else:
+        render_chat_interface()
 
     # Topic Selection
     def disable_buttons_and_topic_select(topic):
@@ -218,10 +224,10 @@ def create_streamlit_interface():
                                    disabled=st.session_state.disabled)
 
 
-    if not st.session_state['question_choices']:
-        st.warning("Select a question")
-    else:
-        render_chat_interface()
+    # if not st.session_state['question_choices']:
+    #     st.warning("Select a question")
+    # else:
+    #     render_chat_interface()
 
 def render_chat_interface():
     st.markdown("""
