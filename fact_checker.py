@@ -303,9 +303,11 @@ def ask_question():
     user_query = st.session_state.query
     if user_query:
         st.session_state['message_history'].append({'sender': '👤User', 'text': user_query})
+        st.session_state.query = ""  # Clear the input field after submission
         with st.spinner('Thinking...'):
             response = check_fact(st.session_state['current_question'], user_query)
-            st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
+        st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
+        render_chat_interface()  # Re-render the chat interface to show the new messages
 
 def start_new_chat():
     st.session_state['message_history'] = []
