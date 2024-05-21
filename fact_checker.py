@@ -30,7 +30,7 @@ OPENAI_KEY = st.secrets["OPENAI_API_KEY"]
 # API Clients
 client = chromadb.PersistentClient(path=CHROMA_DATA_PATH)
 openai_ef = embedding_functions.OpenAIEmbeddingFunction(api_key=OPENAI_KEY,
-                                                         model_name="text-embedding-3-small")
+                                                         model_name="text-embedding-ada-002")
 
 # Initialize the Questions
 topic_choices = {
@@ -51,22 +51,21 @@ topic_choices = {
   ]
 }
 
-OpenAIClient = openai.OpenAI(api_key = OPENAI_KEY)
+OpenAIClient = openai.OpenAI(api_key=OPENAI_KEY)
 collection = client.get_or_create_collection(
-    name = COLLECTION_NAME,
-    embedding_function = openai_ef,
-    metadata = {"hnsw:space" :  "cosine"}
+    name=COLLECTION_NAME,
+    embedding_function=openai_ef,
+    metadata={"hnsw:space": "cosine"}
 )
 
 # Note: Ensure you have proper imports and that 'lock' is defined in the appropriate scope.
 lock = Lock()
 
 def get_embedding(text):
-    response = openai.Embedding.create(model="text-embedding-3-small", input=text)
+    response = openai.Embedding.create(model="text-embedding-ada-002", input=text)
     return response["data"][0]["embedding"]
 
 def semantic_search(query):
-
     try:
         result = collection.query(query_texts=[query], n_results=1)
         print(f"Queried results: {result}")
@@ -120,13 +119,13 @@ def check_fact(bot_question, query):
 
     matched_content = semantic_search(query)
 
-    if matched_content not in ["No similar documents found.", "Found a document but it's not similar enough."]:
+    if matched_content not in ["No matching documents found. Please refine your query and try again.", "Oops, something went wrong with the query. Please try again later."]:
         try:
             response = OpenAIClient.chat.completions.create(
                 model="gpt-4-turbo",
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "assistant", "content" : bot_question},
+                    {"role": "assistant", "content": bot_question},
                     {"role": "user", "content": query},
                     {"role": "assistant", "content": matched_content}
                 ]
@@ -141,8 +140,6 @@ def check_fact(bot_question, query):
             return f"An error occurred: {str(e)}"
     else:
         return "Unable to find a matching document or the document is not similar enough."
-    
-
 
 def create_streamlit_interface():
     st.markdown("""
@@ -222,11 +219,6 @@ def create_streamlit_interface():
     if st.session_state['current_question']:
         render_chat_interface()
 
-    # if not st.session_state['question_choices']:
-    #     st.warning("Select a question")
-    # else:
-    #     render_chat_interface()
-
 def render_chat_interface():
     st.markdown("""
         <style>
@@ -297,7 +289,7 @@ def render_chat_interface():
     st.chat_input("Write your response here", key="query", on_submit=ask_question)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.button("Start New Chat", key='start_new_chat', on_click = start_new_chat)
+    st.button("Start New Chat", key='start_new_chat', on_click=start_new_chat)
 
 def ask_question():
     user_query = st.session_state.query
