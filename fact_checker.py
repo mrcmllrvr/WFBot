@@ -170,13 +170,13 @@ def create_streamlit_interface():
     col1, col2, col3 = st.columns([1, 1, 1])
 
     with col1:
-        st.empty()
-
+      st.write("")
+    
     with col2:
-        st.image("wf-chatbot-logo-with-name.png", width=400)
-
+      st.image("wf-chatbot-logo-with-name.png", width=400)
+    
     with col3:
-        st.empty()
+      st.write("")
 
     st.write("Salaam alaikum! Please select a topic for your quiz today.")
 
@@ -274,6 +274,9 @@ def render_chat_interface():
                 background-color: #002855;
                 color: white;
             }
+            .spinner-container {
+                text-align: center;
+            }
         </style>
         """, unsafe_allow_html=True)
 
@@ -295,7 +298,7 @@ def render_chat_interface():
 
     st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
     st.chat_input("Write your response here", key="query", on_submit=ask_question)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="spinner-container"></div></div>', unsafe_allow_html=True)
 
     st.button("Start New Chat", key='start_new_chat', on_click=start_new_chat)
 
@@ -305,11 +308,13 @@ def ask_question():
         st.session_state['message_history'].append({'sender': '👤User', 'text': user_query})
         
         # Adding the spinner inside the fixed footer
-        with st.markdown('<div class="fixed-footer"><div class="spinner-container">', unsafe_allow_html=True):
+        spinner_placeholder = st.empty()  # Create a placeholder
+        with spinner_placeholder.container():
             with st.spinner('Thinking...'):
                 response = check_fact(st.session_state['current_question'], user_query)
                 st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
-        st.markdown('</div></div>', unsafe_allow_html=True)
+        
+        spinner_placeholder.empty()  # Remove the spinner after processing
 
 
 def start_new_chat():
