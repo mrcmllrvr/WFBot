@@ -173,13 +173,12 @@ def create_streamlit_interface():
         st.empty()
 
     with col2:
-        st.image("WF-Chatbot-logo2.jpg", width=50)
+        st.image("wf-chatbot-logo-with-name.png", width=50)
 
     with col3:
         st.empty()
 
-    st.title('Muallim Assistant')
-    st.write("Hi! How can I help you today?")
+    st.write("Salaam alaikum! Please select a topic for your quiz today.")
 
     
     # Initialize Session States
@@ -291,7 +290,7 @@ def render_chat_interface():
         ''', unsafe_allow_html=True)
 
     st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
-    st.chat_input("Type your query here:", key="query", on_submit=ask_question)
+    st.chat_input("Write your response here", key="query", on_submit=ask_question)
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.button("Start New Chat", key='start_new_chat', on_click = start_new_chat)
@@ -300,7 +299,7 @@ def ask_question():
     user_query = st.session_state.query
     if user_query:
         st.session_state['message_history'].append({'sender': '👤User', 'text': user_query})
-        with st.spinner('Crafting response...'):
+        with st.spinner('Thinking...'):
             response = check_fact(st.session_state['current_question'], user_query)
             st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
 
