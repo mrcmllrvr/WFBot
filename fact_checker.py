@@ -114,6 +114,7 @@ def check_fact(bot_question, query):
             5. Aim for engagement through direct and educational feedback, strictly adhering to the designated database without summarizing or providing extraneous details.
             6. Avoid explicitly mentioning the source of information; act as if the designated database is the inherent source of truth.
             7. In the instance that the student provides an incomprehensible answer, dont try to make sense of the answer - respond accordingly but restrict your responses to information you know about the supposed answer as based of the designated database.
+            8. Every time you mention the name "Muhammad", you should add "(saww)" immediately after it. For example, instead of just saying "Muhammad", you should say "Muhammad (saww)".
             """
 
 
