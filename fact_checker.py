@@ -243,39 +243,9 @@ def render_chat_interface():
                 background-color: #ffffff;
                 border-left: 5px solid #002855;
             }
-            .fixed-footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background-color: #fff;
-                padding: 10px 200px;
-                box-shadow: 0px -2px 10px rgba(0,0,0,0.1);
-                z-index: 100;
-            }
-            .streamlit-container {
-                padding-bottom: 70px;
-            }
-            .label {
-                font-weight: bold;
-                display: block;
-                margin-bottom: 5px;
-            }
-            .message-text {
-                margin-left: 20px;
-            }
-            .thread-container {
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-            .stButton > button {
-                width: 100%;
-                border-radius: 10px;
-                background-color: #002855;
-                color: white;
-            }
             .spinner-container {
                 text-align: center;
+                margin-top: 10px;
             }
         </style>
         """, unsafe_allow_html=True)
@@ -296,24 +266,22 @@ def render_chat_interface():
         </div>
         ''', unsafe_allow_html=True)
 
-    st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
-    st.chat_input("Write your response here", key="query", on_submit=ask_question)
-    st.markdown('<div class="spinner-container"></div></div>', unsafe_allow_html=True)
+    spinner_placeholder = st.empty()  # Create a placeholder for the spinner
 
+    st.chat_input("Write your response here", key="query", on_submit=ask_question, args=[spinner_placeholder])
     st.button("Start New Chat", key='start_new_chat', on_click=start_new_chat)
 
-def ask_question():
+def ask_question(spinner_placeholder):
     user_query = st.session_state.query
     if user_query:
         st.session_state['message_history'].append({'sender': '👤User', 'text': user_query})
         
-        # Adding the spinner inside the fixed footer
-        spinner_placeholder = st.empty()  # Create a placeholder
+        # Adding the spinner inside the placeholder after the user's last message
         with spinner_placeholder.container():
             with st.spinner('Thinking...'):
                 response = check_fact(st.session_state['current_question'], user_query)
                 st.session_state['message_history'].append({'sender': '🤖Chatbot', 'text': response})
-        
+
         spinner_placeholder.empty()  # Remove the spinner after processing
 
 
