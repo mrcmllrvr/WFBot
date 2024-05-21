@@ -167,13 +167,13 @@ def create_streamlit_interface():
         st.sidebar.image("ICAIR-logo.png", use_column_width=True)
 
     # Using columns to center an image
-    col1, col2, col3 = st.columns([2, 1, 2])
+    col1, col2, col3 = st.columns([3, 1, 3])
 
     with col1:
         st.empty()
 
     with col2:
-        st.image("wf-chatbot-logo-with-name.png", width=300)
+        st.image("wf-chatbot-logo-with-name.png", width=400)
 
     with col3:
         st.empty()
