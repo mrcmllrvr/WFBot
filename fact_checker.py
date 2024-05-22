@@ -178,7 +178,7 @@ def create_streamlit_interface():
     with col3:
       st.write("")
 
-    st.write("Salaam alaikum! Please select a topic for your quiz today.")
+    st.write("Salaam alaykum! Please select a topic for your quiz today.")
 
     # Initialize Session States
     if 'current_question' not in st.session_state:
