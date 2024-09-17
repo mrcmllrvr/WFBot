@@ -14,7 +14,7 @@ catalogue==2.0.10
 certifi==2023.7.22
 cffi==1.16.0
 charset-normalizer==3.2.0
-chromadb
+chromadb==0.5.3
 click==8.1.7
 cloudpathlib==0.16.0
 colorama==0.4.6
